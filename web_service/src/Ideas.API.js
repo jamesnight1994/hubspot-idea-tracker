@@ -14,6 +14,24 @@ ideaRouter.get("/", async (req, res, next) => {
   }
 });
 
+
+
+const createTimeLineEvent = async (idea) => {
+  const accessToken = await getAccessToken(1);
+  try {
+    await axios.post(
+      `http://hubspot_service:8080/api/timeline/${accessToken}`,
+      {
+        idea,
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = ideaRouter;
+
 ideaRouter.post("/", async (req, res, next) => {
   const idea = req.body;
   console.log(idea);
@@ -21,6 +39,7 @@ ideaRouter.post("/", async (req, res, next) => {
     const dbResponse = await Idea.create(idea);
     const populatedIdea = await dbResponse.populate("author").execPopulate();
     res.send(populatedIdea);
+    createTimeLineEvent(populatedIdea);
   } catch (err) {
     next(err);
   }
@@ -34,5 +53,3 @@ ideaRouter.delete("/", async (req, res, next) => {
     next(err);
   }
 });
-
-module.exports = ideaRouter;
