@@ -3,6 +3,7 @@ services:
   web_service:
     build: ./web_service
     container_name: web_service
+    image: hubspot/web_service
     #context: ./server/
     command: /usr/app/node_modules/.bin/nodemon src/server.js
     volumes:
@@ -16,6 +17,7 @@ services:
   hubspot_service:
     build: ./hubspot_service
     container_name: hubspot_service
+    image: hubspot/hubspot_service
     #context: ./server/
     command: /usr/app/node_modules/.bin/nodemon src/server.js
     volumes:
@@ -29,8 +31,9 @@ services:
   client:
     build: ./client
     container_name: idea_tracker_client
-    #context: ./client/
-    #command: yarn start
+    image: hubspot/idea_tracker_client
+    # command: tail -F anything
+    command: yarn start
     volumes:
       - ./client:/usr/app
       - /usr/app/node_modules
@@ -39,6 +42,7 @@ services:
     ports:
       - "3000:3000"
     env_file: ./.env
+
   mongo:
     # upgrade to https://medium.com/faun/managing-mongodb-on-docker-with-docker-compose-26bf8a0bbae3 later
     image: mongo
@@ -47,6 +51,13 @@ services:
       - ./mongo-volume:/data/db
     expose:
       - "27017"
+
+  mongo_express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    env_file:
+      - ./.env
 volumes:
   web_service:
   hubspot_service:

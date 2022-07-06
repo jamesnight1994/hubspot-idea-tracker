@@ -1,6 +1,6 @@
 // hubspot init
 const hubspot = require("@hubspot/api-client")
-const { CLIENT_ID, BASEURL,SCOPES,CLIENT_SECRET } = process.env;
+const { CLIENT_ID, BASE_URL,SCOPES,CLIENT_SECRET } = process.env;
 const REDIRECT_URL = `${BASE_URL}/oauth/callback`;
 
 const express = require("express");
