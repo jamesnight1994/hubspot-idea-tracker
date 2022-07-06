@@ -1,6 +1,6 @@
 # Idea Tracker
 
-An example application to show how to architect an integration with HubSpot.
+An hubspot integration made with MEAN stack and provisioned by docker-compose
 
 ## Disclaimer
 
